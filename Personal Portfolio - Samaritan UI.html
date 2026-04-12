@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Samaritan UI Portfolio</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'MiSans-Regular';
+            src: url('https://assets-persist.lovart.ai/agent-static-assets/MiSans-Regular.ttf');
+        }
+        @font-face {
+            font-family: 'MiSans-Bold';
+            src: url('https://assets-persist.lovart.ai/agent-static-assets/MiSans-Bold.ttf');
+        }
+        @font-face {
+            font-family: 'AlibabaSans-Medium';
+            src: url('https://assets-persist.lovart.ai/agent-static-assets/AlibabaSans-Medium.otf');
+        }
+
+        :root {
+            --primary-bg: #f8f8f8;
+            --secondary-bg: #111111;
+            --text-primary: #111111;
+            --text-secondary: #f8f8f8;
+            --accent: #ff0033; /* Stronger Red */
+            --grid-color: rgba(0, 0, 0, 0.05);
+            --code-color: rgba(0, 0, 0, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'MiSans-Regular', monospace, sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            width: 1920px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* Decorative Background Elements */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .scanline {
+            width: 100%;
+            height: 2px;
+            background: rgba(255, 0, 51, 0.1);
+            position: fixed;
+            z-index: 999;
+            top: 0;
+            left: 0;
+            animation: scan 6s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes scan {
+            0% { top: -10%; }
+            100% { top: 110%; }
+        }
+
+        /* Glitch Effect */
+        .glitch {
+            position: relative;
+            color: var(--text-primary);
+        }
+
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-bg);
+        }
+
+        .glitch::before {
+            left: 2px;
+            text-shadow: -1px 0 #ff0033;
+            clip: rect(24px, 550px, 90px, 0);
+            animation: glitch-anim-2 3s infinite linear alternate-reverse;
+        }
+
+        .glitch::after {
+            left: -2px;
+            text-shadow: -1px 0 #00ccff;
+            clip: rect(85px, 550px, 140px, 0);
+            animation: glitch-anim 2.5s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim {
+            0% { clip: rect(14px, 9999px, 86px, 0); }
+            20% { clip: rect(98px, 9999px, 8px, 0); }
+            40% { clip: rect(4px, 9999px, 115px, 0); }
+            60% { clip: rect(62px, 9999px, 73px, 0); }
+            80% { clip: rect(31px, 9999px, 148px, 0); }
+            100% { clip: rect(104px, 9999px, 3px, 0); }
+        }
+
+        @keyframes glitch-anim-2 {
+            0% { clip: rect(65px, 9999px, 110px, 0); }
+            20% { clip: rect(96px, 9999px, 20px, 0); }
+            40% { clip: rect(2px, 9999px, 143px, 0); }
+            60% { clip: rect(54px, 9999px, 44px, 0); }
+            80% { clip: rect(27px, 9999px, 137px, 0); }
+            100% { clip: rect(9px, 9999px, 93px, 0); }
+        }
+
+        /* Header */
+        header {
+            width: 100%;
+            height: 80px;
+            background-color: var(--secondary-bg);
+            color: var(--text-secondary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 60px;
+            border-bottom: 2px solid var(--accent);
+            position: relative;
+            z-index: 100;
+        }
+
+        .logo {
+            font-family: 'AlibabaSans-Medium';
+            font-size: 24px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo-icon {
+            width: 12px;
+            height: 12px;
+            background-color: var(--accent);
+            transform: rotate(45deg);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-family: 'MiSans-Regular';
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            padding-bottom: 5px;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background-color: var(--accent);
+            transition: 0.3s;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero / About Section */
+        .hero {
+            padding: 120px 60px;
+            min-height: 800px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border: 1px solid var(--text-primary);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            background: rgba(255,255,255,0.8);
+        }
+
+        .status-badge span {
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        h1 {
+            font-family: 'MiSans-Bold';
+            font-size: 120px;
+            line-height: 0.9;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+            color: var(--text-primary);
+        }
+
+        .hero p {
+            font-size: 20px;
+            line-height: 1.6;
+            max-width: 600px;
+            margin-bottom: 60px;
+            border-left: 4px solid var(--accent);
+            padding-left: 20px;
+        }
+
+        /* Decorative Code & Corners */
+        .corner-tl, .corner-tr, .corner-bl, .corner-br {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--text-primary);
+            z-index: 1;
+        }
+        .corner-tl { top: 40px; left: 40px; border-right: none; border-bottom: none; }
+        .corner-tr { top: 40px; right: 40px; border-left: none; border-bottom: none; }
+        .corner-bl { bottom: 40px; left: 40px; border-right: none; border-top: none; }
+        .corner-br { bottom: 40px; right: 40px; border-left: none; border-top: none; }
+
+        .bg-code {
+            position: absolute;
+            font-family: monospace;
+            color: var(--code-color);
+            font-size: 14px;
+            line-height: 1.4;
+            user-select: none;
+            z-index: 0;
+        }
+
+        .bg-code.top-right { top: 100px; right: 100px; text-align: right; }
+        .bg-code.bottom-left { bottom: 100px; left: 100px; }
+
+        /* My Work Section */
+        .work-section {
+            background-color: var(--secondary-bg);
+            color: var(--text-secondary);
+            padding: 100px 60px;
+            position: relative;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 80px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 20px;
+        }
+
+        .section-title {
+            font-family: 'MiSans-Bold';
+            font-size: 60px;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+        }
+
+        .section-meta {
+            font-family: monospace;
+            color: #666;
+            text-align: right;
+        }
+
+        .work-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+
+        .project-card {
+            border: 1px solid #333;
+            background: #1a1a1a;
+            height: 500px;
+            position: relative;
+            transition: 0.3s;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+        }
+
+        .card-image {
+            height: 60%;
+            background-color: #222;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid #333;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: 0.5s;
+        }
+
+        .project-card:hover .card-image img {
+            filter: grayscale(0%);
+        }
+
+        .card-overlay {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--accent);
+            color: white;
+            padding: 2px 8px;
+            font-size: 10px;
+            font-family: monospace;
+        }
+
+        .card-content {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 40%;
+        }
+
+        .project-title {
+            font-size: 24px;
+            font-family: 'AlibabaSans-Medium';
+            margin-bottom: 10px;
+            color: var(--text-secondary);
+        }
+
+        .project-desc {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .project-tech {
+            display: flex;
+            gap: 10px;
+            font-family: monospace;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .project-tech span {
+            border: 1px solid #444;
+            padding: 2px 6px;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 100px 60px;
+            background-color: var(--primary-bg);
+            position: relative;
+            min-height: 600px;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+        }
+
+        .contact-info {
+            position: relative;
+        }
+
+        .contact-item {
+            margin-bottom: 40px;
+            border-left: 2px solid #ccc;
+            padding-left: 20px;
+            transition: 0.3s;
+        }
+
+        .contact-item:hover {
+            border-left-color: var(--accent);
+        }
+
+        .contact-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #666;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .contact-value {
+            font-size: 28px;
+            font-family: 'MiSans-Bold';
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .form-container {
+            background: white;
+            border: 1px solid #000;
+            padding: 40px;
+            position: relative;
+        }
+
+        .form-container::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            width: 20px;
+            height: 20px;
+            border-top: 2px solid var(--accent);
+            border-left: 2px solid var(--accent);
+        }
+
+        .form-container::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            right: -5px;
+            width: 20px;
+            height: 20px;
+            border-bottom: 2px solid var(--accent);
+            border-right: 2px solid var(--accent);
+        }
+
+        .input-group {
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-family: monospace;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        .input-group input, .input-group textarea {
+            width: 100%;
+            border: none;
+            border-bottom: 1px solid #000;
+            background: transparent;
+            padding: 10px 0;
+            font-family: 'MiSans-Regular';
+            font-size: 16px;
+            outline: none;
+        }
+
+        .input-group input:focus, .input-group textarea:focus {
+            border-bottom-color: var(--accent);
+        }
+
+        .submit-btn {
+            background: black;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-family: 'AlibabaSans-Medium';
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: var(--accent);
+        }
+
+        /* Decorative Elements */
+        .decor-line {
+            width: 100%;
+            height: 1px;
+            background: #ddd;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .decor-line::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 3px;
+            background: var(--accent);
+            left: 20%;
+            top: -1px;
+        }
+
+        .math-formula {
+            position: absolute;
+            font-family: "Times New Roman", serif;
+            font-style: italic;
+            opacity: 0.1;
+            font-size: 24px;
+            z-index: 0;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #000; 
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent); 
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+    <div class="scanline"></div>
+
+    <header>
+        <div class="logo">
+            <div class="logo-icon"></div>
+            <span>ASSET_404</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#work">My Work</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#">// LOG_IN</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="about" class="hero">
+        <div class="corner-tl"></div>
+        <div class="corner-tr"></div>
+        <div class="corner-bl"></div>
+        <div class="corner-br"></div>
+
+        <div class="bg-code top-right">
+            function initiate_sequence() {<br>
+                target_id: "ADMIN";<br>
+                access_level: 0;<br>
+                status: "ACTIVE";<br>
+                threat_assessment: "LOW";<br>
+                return true;<br>
+            }<br>
+            // Analyzing behavioral patterns...<br>
+            // Subject identified.<br>
+            [00110101 01100010 01100101]<br>
+        </div>
+
+        <div class="bg-code bottom-left">
+            struct Node {<br>
+                int data;<br>
+                struct Node* next;<br>
+            };<br>
+            void push(struct Node** head_ref, int new_data);<br>
+            // SYSTEM OVERRIDE<br>
+        </div>
+
+        <div class="hero-content">
+            <div class="status-badge">System Status: <span>ONLINE</span></div>
+            <h1 class="glitch" data-text="ALEXANDER_CHEN">ALEXANDER_CHEN</h1>
+            <p>
+                Full Stack Developer & UI Engineer based in Sector 4. Specializing in secure architecture, data visualization, and minimalist digital experiences. 
+                Currently monitoring the network for anomalies.
+            </p>
+            <div style="font-family: monospace; margin-top: 20px; color: #666;">
+                > ACCESSING ARCHIVES...<br>
+                > LOADING MODULES: [REACT] [THREE.JS] [PYTHON] [TENSORFLOW]
+            </div>
+        </div>
+        
+        <div class="math-formula" style="top: 20%; left: 60%; font-size: 40px;">∫ e^x dx = e^x + C</div>
+        <div class="math-formula" style="bottom: 25%; right: 20%; font-size: 32px;">∇ ⋅ E = ρ / ε₀</div>
+    </section>
+
+    <section id="work" class="work-section">
+        <div class="section-header">
+            <h2 class="section-title">Case Files</h2>
+            <div class="section-meta">
+                TOTAL_RECORDS: 003<br>
+                CLASSIFICATION: PUBLIC
+            </div>
+        </div>
+
+        <div class="work-grid">
+            <!-- Project 1 -->
+            <div class="project-card">
+                <div class="card-overlay">#001_ALPHA</div>
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop" alt="Cybersecurity Dashboard">
+                </div>
+                <div class="card-content">
+                    <div>
+                        <h3 class="project-title">Neural Net Visualizer</h3>
+                        <p class="project-desc">Real-time visualization of machine learning algorithms processing large datasets. Features interactive 3D nodes.</p>
+                    </div>
+                    <div class="project-tech">
+                        <span>WEBGL</span>
+                        <span>PYTHON</span>
+                        <span>D3.JS</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="project-card">
+                <div class="card-overlay">#002_BETA</div>
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1558494949-ef526b0042a0?q=80&w=2070&auto=format&fit=crop" alt="Fintech App">
+                </div>
+                <div class="card-content">
+                    <div>
+                        <h3 class="project-title">Secure Crypto Wallet</h3>
+                        <p class="project-desc">Encrypted decentralized application for asset management with biometric authentication protocols.</p>
+                    </div>
+                    <div class="project-tech">
+                        <span>REACT</span>
+                        <span>SOLIDITY</span>
+                        <span>RUST</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="project-card">
+                <div class="card-overlay">#003_GAMMA</div>
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop" alt="AI Interface">
+                </div>
+                <div class="card-content">
+                    <div>
+                        <h3 class="project-title">Smart City Interface</h3>
+                        <p class="project-desc">Urban monitoring dashboard for tracking traffic flow, energy consumption, and emergency response times.</p>
+                    </div>
+                    <div class="project-tech">
+                        <span>VUE</span>
+                        <span>NODE.JS</span>
+                        <span>IOT</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="math-formula" style="color: rgba(255,255,255,0.05); top: 10%; right: 5%;">f(x) = a_0 + \sum_{n=1}^{\infty} (a_n \cos \frac{n\pi x}{L} + b_n \sin \frac{n\pi x}{L})</div>
+    </section>
+
+    <section id="contact" class="contact-section">
+        <div class="section-header" style="border-color: #ddd;">
+            <h2 class="section-title" style="color: var(--text-primary);">Establish Uplink</h2>
+            <div class="section-meta">
+                ENCRYPTION: ENABLED<br>
+                CHANNEL: SECURE
+            </div>
+        </div>
+
+        <div class="contact-grid">
+            <div class="contact-info">
+                <div class="contact-item">
+                    <span class="contact-label">Primary Frequency (Email)</span>
+                    <a href="/cdn-cgi/l/email-protection#4a2925243e2b293e0a392b272b38233e2b2464242f3e" class="contact-value"><span class="__cf_email__" data-cfemail="23404b464d6350424e42514a57424d0d4d4657">[email&#160;protected]</span></a>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-label">Signal Source (Location)</span>
+                    <span class="contact-value">New York, NY [40.7128° N, 74.0060° W]</span>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-label">Social Nodes</span>
+                    <div style="display: flex; gap: 20px; margin-top: 10px;">
+                        <a href="#" class="contact-value" style="font-size: 16px; border: 1px solid black; padding: 10px 20px;">GITHUB</a>
+                        <a href="#" class="contact-value" style="font-size: 16px; border: 1px solid black; padding: 10px 20px;">LINKEDIN</a>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 60px; font-family: monospace; color: #666; font-size: 12px; line-height: 2;">
+                    CAUTION: ALL COMMUNICATIONS ARE MONITORED.<br>
+                    UNAUTHORIZED ACCESS ATTEMPTS WILL BE LOGGED.<br>
+                    SYSTEM ID: 9283-XJ-22
+                </div>
+            </div>
+
+            <div class="form-container">
+                <form>
+                    <div class="input-group">
+                        <label>Identity</label>
+                        <input type="text" placeholder="ENTER NAME">
+                    </div>
+                    <div class="input-group">
+                        <label>Coordinates / Email</label>
+                        <input type="email" placeholder="ENTER CONTACT INFO">
+                    </div>
+                    <div class="input-group">
+                        <label>Transmission Content</label>
+                        <textarea rows="4" placeholder="ENTER MESSAGE"></textarea>
+                    </div>
+                    <button type="button" class="submit-btn">Transmit Data</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="math-formula" style="bottom: 5%; left: 5%;">E = mc^2</div>
+    </section>
+
+    <footer style="background: black; color: white; padding: 40px 60px; text-align: center; font-family: monospace; font-size: 12px; border-top: 2px solid var(--accent);">
+        <p>SAMARITAN SYSTEM UI v4.0.2 // DESIGNED BY ASSET_404</p>
+        <p style="color: #666; margin-top: 10px;">&copy; 2024 ALL RIGHTS RESERVED. SURVEILLANCE ACTIVE.</p>
+    </footer>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // Simple script to update random numbers in the UI simulating data processing
+        setInterval(() => {
+            // Can be extended to update decorative numbers
+        }, 1000);
+    </script>
+</body>
+</html>

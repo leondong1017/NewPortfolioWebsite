@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case File — Leon Dong</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+<body class="case-page">
+    <div class="bg-grid"></div>
+    <div class="scanline"></div>
+
+    <div id="header-mount"></div>
+
+    <main class="case-detail-root work-section case-detail">
+        <div class="case-detail__toolbar">
+            <a href="index.html#work" class="case-back" data-i18n="casePage.back">← Return to case files</a>
+        </div>
+
+        <div class="section-header case-detail__header">
+            <div>
+                <p class="case-detail__record" id="case-record"></p>
+                <h1 class="section-title case-detail__title" id="case-title"></h1>
+                <p class="case-detail__desc" id="case-desc"></p>
+            </div>
+            <div class="section-meta">
+                <span id="case-page-meta" data-i18n="casePage.meta">FILE_STATUS: DECRYPTED</span>
+            </div>
+        </div>
+
+        <div class="case-detail__hero">
+            <img id="case-hero-img" src="" alt="" width="1200" height="675" loading="eager">
+        </div>
+
+        <div class="case-detail__body" id="case-body"></div>
+
+        <div class="project-tech case-detail__tech" id="case-tech"></div>
+
+        <div class="math-formula math-formula--work">f(x) = a_0 + \sum_{n=1}^{\infty} (a_n \cos \frac{n\pi x}{L} + b_n \sin \frac{n\pi x}{L})</div>
+    </main>
+
+    <div id="footer-mount"></div>
+
+    <script src="js/shared-layout.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/case-detail.js"></script>
+</body>
+</html>
